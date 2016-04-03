@@ -1,0 +1,144 @@
+{% extends "blog/blog_post_list.html" %}
+{% load mezzanine_tags pages_tags comment_tags keyword_tags rating_tags i18n staticfiles %}
+{% load custom_tags %}
+
+{% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for blog_post as tags %}
+{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ blog_post.description }}
+{% endmetablock %}{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            if($(window).width() < 768){
+                $('.related_post:last').addClass('hide');
+            }
+        });
+        $(window).resize(function(){
+            if($(window).width() < 768){
+                $('.related_post:last').addClass('hide');
+            }else{
+                $('.related_post:last').removeClass('hide');
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block title %}
+    <h3 id='blogTitle' class='col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 text-center'>
+        <i class='fa fa-sm fa-caret-right'></i> {{ blog_post.title }}
+    </h3>
+{% endblock %}
+
+{% block main %}
+    {% block blog_post_detail_featured_image %}
+        {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+            <div id='illustration' {% if blog_post.resize %}{% if 'pns' in request.get_host %}style='background-image:url("{% static 'img/purple-stripe.png' %}");'{% elif 'lalettre' in request.get_host %}style='background-image:url("{% static 'img/yellow-stripe.png' %}");'{% elif 'tendances' in request.get_host %}style='background-image:url("{% static 'img/orange-stripe.png' %}");'{% else %}style='background-image:url("{% static 'img/blue-stripe.png' %}");'{% endif %}{% endif %}>
+                {% if not blog_post.resize %}
+                    <img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 1200 300 %}">
+                {% else %}
+                    <img class="img-responsive blockResize" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 0 300 %}">
+                {% endif %}
+                <div class="">
+                    {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+    {# <ul class="breadcrumb"> #}
+        {# {% spaceless %} #}
+            {# {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %} #}
+        {# {% endspaceless %} #}
+    {# </ul> #}
+
+    <div id='blogContent' class='container'>
+        <div id='richTextZone' class='col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-sm-offset-0'>
+        {% block blog_post_detail_content %}
+            {% editable blog_post.content %}
+                <i class='fa fa-lg fa-long-arrow-right' style='float: left; margin-right: 10px;'></i>
+                {{ blog_post.content|richtext_filters|safe }}
+            {% endeditable %}
+        {% endblock %}
+        </div>
+        {% if banners %}
+            {% with banners|random as banner %}
+                <div class='layer-banner col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1' style='margin-bottom: 30px;'> 
+                    <a href='{{ banner.lien }}' target='blank'>
+                        <div class='container-banner'>
+                            <img src='/static/media/publicite/{{ banner.media }}' />
+                        </div>
+                    </a>
+                </div>
+            {% endwith %}
+        {% else %}
+            <!-- NO AD -->
+        {% endif %}
+        {% block blog_post_previous_next %}
+            <ul class="pager">
+                {% with blog_post.get_previous_by_publish_date as previous %}
+                {% if previous %}
+                    <li class="previous">
+                        <a href="{{ previous.get_absolute_url }}">&larr; {{ previous|truncatechars:50 }}</a>
+                    </li>
+                {% endif %}
+                {% endwith %}
+                {% with blog_post.get_next_by_publish_date as next %}
+                {% if next %}
+                    <li class="next">
+                        <a href="{{ next.get_absolute_url }}">{{ next|truncatechars:50 }} &rarr;</a>
+                    </li>
+                {% endif %}
+                {% endwith %}
+            </ul>
+        {% endblock %}
+
+        {% block blog_post_detail_related_posts %}
+        {% if related_posts %}
+            <div id="related-posts">
+                <h3 class='text-center' style='margin-top:50px; padding:20px 0; border-top:1px solid rgb(230,230,240); color:#007099;'>
+                    <i class='fa fa-xl fa-link'></i>
+                    {% trans 'Related posts' %}
+                </h3>
+                {% for post in related_posts %}
+                <a href='{% url "blog_post_detail" post.slug %}'>
+                    <div class='related_post col-md-4 col-sm-4 col-xs-6 text-center'>
+                        <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail post.featured_image 250 125 %}' alt='featured_image__related_post' />
+                        <a href="{{ post.get_absolute_url }}">
+                            <h4> {{ post.title }}</h4>
+                        </a>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endblock %}
+
+    </div>
+
+    <div class='hide'>
+    {% block blog_post_detail_keywords %}
+        {% keywords_for blog_post as tags %}
+        {% if tags %}
+        {% spaceless %}
+            <ul class="list-inline tags">
+                <li>{% trans "Tags" %}:</li>
+                {% for tag in tags %}
+                <li><a href="{% url "blog_post_list_tag" tag.slug %}">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                {% endfor %}
+            </ul>
+        {% endspaceless %}
+        {% endif %}
+    {% endblock %}
+    </div>
+
+    {% block blog_post_detail_sharebuttons %}
+    {% endblock %}
+
+{% endblock %}
+

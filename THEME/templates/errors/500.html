@@ -1,0 +1,23 @@
+{% extends "login_base.html" %}
+{% load pages_tags mezzanine_tags i18n staticfiles custom_tags bootstrap3 i18n %}
+
+{% block meta_title %}
+{% trans "Error" %}
+{% endblock %}
+
+{% block title %}
+{% trans "Error" %}
+{% endblock %}
+
+{% block main %}
+<div class='container'>
+    <div class='row' style='margin-top:40px;'>
+        <div class='col-md-12'>
+            <div class="panel panel-danger">
+                <div class="panel-heading"><h3 class="panel-title">{% trans "Error" %}</h3></div>
+                <div class="panel-body">{% trans "Sorry, an error occurred." %}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

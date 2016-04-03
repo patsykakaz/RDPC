@@ -4,11 +4,32 @@ import os
 
 from django import VERSION as DJANGO_VERSION
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 
 ######################
 # MEZZANINE SETTINGS #
 ######################
+
+# Make these unique, and don't share it with anybody.
+SECRET_KEY = ")0&6f6j@x0g+=#w#4+@h9c-+8k_4+q(g4)&!9!^7uwv6t_##ax"
+NEVERCACHE_KEY = "31w7nyzx3*$va70a6d3s#of30g*o5%w1oontf$@)^w7yt%pd5("
+
+SECRET_KEY = "7u7x#t#m=e*5-i*ix_7xb+fmbqkoz_h86d1oymw)%x#v4*29wg"
+NEVERCACHE_KEY = "dzrl6r@^94q+p9bp0!xvru)i7(=5xspw97%uj5unhuqb)^ro%%"
+
+MAIN_SITE = "localhost:8000"
+LOGIN_URL = reverse_lazy('USERMGMT.views.connect')
+ADMINS = [('Philippe','philippe@lesidecar.fr'),]
+# refTitre for abonnement
+REF_ABO = 26
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.ddn.fr'
+EMAIL_USE_TLS = False
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'groupemd4wwy'
+EMAIL_HOST_PASSWORD = 'q54a45q8a'
 
 # The following settings are already defined with default values in
 # the ``defaults.py`` module within each of Mezzanine's apps, but are
@@ -118,7 +139,7 @@ LANGUAGES = (
 # A boolean that turns on/off debug mode. When set to ``True``, stack traces
 # are displayed for error pages. Should always be set to ``False`` in
 # production. Best set to ``True`` in local_settings.py
-DEBUG = False
+DEBUG = True
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -143,9 +164,9 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 DATABASES = {
     "default": {
         # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
-        "ENGINE": "django.db.backends.",
+        "ENGINE": "django.db.backends.sqlite3",
         # DB name or path to database file if using sqlite3.
-        "NAME": "",
+        "NAME": "dev.db",
         # Not used with sqlite3.
         "USER": "",
         # Not used with sqlite3.
@@ -230,6 +251,7 @@ if DJANGO_VERSION < (1, 9):
 ################
 
 INSTALLED_APPS = (
+    "THEME",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -249,6 +271,11 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     # "mezzanine.accounts",
     # "mezzanine.mobile",
+    "MAIN",
+    "USERMGMT",
+    "ADMGMT",
+    "colorfield",
+    "bootstrap3",
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -277,6 +304,9 @@ MIDDLEWARE_CLASSES = (
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    "MAIN.middleware.AuthXMiddleware",
+    "MAIN.middleware.NavMiddleware",
+    "ADMGMT.middleware.PubMiddleware",
 )
 
 # Store these package names here as they may change in the future since
