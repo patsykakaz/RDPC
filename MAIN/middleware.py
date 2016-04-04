@@ -26,8 +26,8 @@ class NavMiddleware(object):
         # all_sites.extend(list(Site.objects.filter(pk=3)))
         all_sites = Site.objects.all()
         restrictedSite = Site.objects.get(name="LA LETTRE")
-	reportage = Reportage.objects.last()
-	reportage.inlines = Reportage_pic.objects.filter(Reportage=reportage)
+        reportage = Reportage._base_manager.last()
+        reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
 
         # last_blogPosts = BlogPost._base_manager.exclude(id__in=mainArticles).exclude(status=1)[0:18]
         last_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
@@ -66,7 +66,7 @@ class NavMiddleware(object):
         response.context_data['all_sites'] = all_sites
         response.context_data['last_blogPosts'] = last_blogPosts
         response.context_data['restricted_blogPosts'] = restricted_blogPosts
-	response.context_data['reportage'] = reportage
+        response.context_data['reportage'] = reportage
         return response
 
 

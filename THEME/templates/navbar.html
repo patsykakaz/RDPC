@@ -1,0 +1,98 @@
+{% if request.user.is_authenticated  %}  
+<a id='abonnement' class='mail_token' href='{% url 'changeUser' %}'>
+    <b>
+        <i class='fa fa-user' style='color:white;'></i>
+        {{ request.user.email|truncatechars:30 }}
+    </b>
+</a>
+{% else %}
+<a href='{% url "ask_abo" %}' id='abonnement'>
+    <b> abonnement </b>
+</a>
+{% endif %}
+<nav id='contentNav' class="navbar navbar-default" role="navigation">
+<div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="//papiercarton.com"><img src='{% static "img/logo_papiercarton.jpg" %}' alt='logo' /></a>
+    </div>
+    <div id='navbar-collapse-1' class="collapse navbar-collapse">
+        <ul class='nav navbar-nav'>
+            {% for site in all_sites %}
+            <!--{{ request.get_host }}-->
+            <!--{{ site.domain }}-->
+            <li class='dropdown dropdown-custom {{ site.css_class }} {% if site.domain == request.get_host and 'articles' in request.get_full_path %}active{% endif %}'>
+                <a class='dropdown-toggle text-center' href='//{{ site.domain }}/articles/'>
+                <div class='site_title'> {{ site.name|upper }} </div>
+                <div class='site_sub_title {{ site.css_class }}'> {{ site.title_sub }} </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li id='search-btn' class='dropdown {% if not 'lalettre' in request.get_host %} hide {% endif %}'>
+                <a href="javascript:void(0)" class='dropdown-toggle text-center'>
+                    <i class='fa fa-2x fa-search'></i>
+                    <span class='mobileTitle'>RECHERCHE</span>
+                </a>
+            </li>
+            <li class="dropdown {% if page.is_current_or_ascendant %}active{% endif %}" id="univers_PNP">
+                <a href="{{ page.get_absolute_url }}" class="dropdown-toggle text-center" data-toggle="dropdown">
+                    UNIVERS PNP
+                    <span class='mobileTitle'>UNIVERS PNP</span>
+                </a>
+                <ul class="dropdown-menu text-center">
+                {% for page_univ in pages_univers %}
+                    <li class="{% if page_univ.is_current_or_ascendant %}active{% endif %}" id="{{ page_univ.html_id }}">
+                        <a href="//{{ mainSite }}{{ page_univ.get_absolute_url }}">
+                        <div class='sub_univ_PNP'>
+                            {{ page_univ.title }}
+                         </div>
+                        </a>
+                     </li>
+                {% endfor %}
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href class="dropdown-toggle text-center" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {% if not user.is_authenticated %}
+                        <i class='fa fa-2x fa-user'></i>
+                        <span class='mobileTitle'>CONNEXION</span>
+                    {% else %}
+                        <i class='fa fa-2x fa-user' style='color:#FEC10D'></i>
+                        <span class='mobileTitle'>PROFIL</span>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-center">
+                    {% if not user.is_authenticated %}
+                    <li class="{% if page_univ.is_current_or_ascendant %}active{% endif %}">
+                        <a href="/user/login/">
+                            connexion
+                        </a>
+                    </li>
+                     {% else %}
+                    <li class="{% if page_univ.is_current_or_ascendant %}active{% endif %}">
+                        <a href="/user/modification/">
+                            modifier profil
+                        </a>
+                    </li>
+                    <li class="{% if page_univ.is_current_or_ascendant %}active{% endif %}">
+                        <a href="/user/logout/">
+                            déconnexion
+                        </a>
+                     </li>
+                     {% endif %}
+                </ul>
+            </li>
+        </ul>
+        <form id='search_form' action='/search/' class="hide navbar-form" role="search">
+            {% search_form %}
+        </form>
+    </div>
+</div>
+</nav>
