@@ -21,18 +21,19 @@ class AuthXMiddleware(object):
 
 class NavMiddleware(object):
     def process_template_response(self, request, response):
-        # photoReportage
-        # articles abonnés
-        # lastBlogPost
         currentSite = Site.objects.get_current()
         # all_sites = list(Site.objects.exclude(pk=3).order_by('domain'))
         # all_sites.extend(list(Site.objects.filter(pk=3)))
         all_sites = Site.objects.all()
         restrictedSite = Site.objects.get(name="LA LETTRE")
+	reportage = Reportage.objects.last()
+	reportage.inlines = Reportage_pic.objects.filter(Reportage=reportage)
 
         # last_blogPosts = BlogPost._base_manager.exclude(id__in=mainArticles).exclude(status=1)[0:18]
         last_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
+        print "last_blogPosts = %s" % last_blogPosts
         restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite)
+        print "restricted_blogPosts = %s" % restricted_blogPosts
         # fetch color code
         # for post in last_blogPosts:
         #     try:
@@ -64,6 +65,9 @@ class NavMiddleware(object):
         response.context_data['mainSite'] = settings.MAIN_SITE
         response.context_data['all_sites'] = all_sites
         response.context_data['last_blogPosts'] = last_blogPosts
+        response.context_data['restricted_blogPosts'] = restricted_blogPosts
+	response.context_data['reportage'] = reportage
         return response
+
 
 

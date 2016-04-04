@@ -4,11 +4,15 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.sites.models import *
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from settings import MEDIA_ROOT
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText
+from mezzanine.core.fields import RichTextField, FileField
 from mezzanine.utils.sites import current_site_id, current_request
+from mezzanine.utils.models import upload_to
+
 from colorfield.fields import ColorField
 
 class Client(models.Model):
@@ -51,6 +55,25 @@ class PageUnivers(Page, RichText):
 
     class Meta:
         verbose_name = 'UNIVERS_PNP'
+
+class Reportage(Page, RichText):
+
+    def save(self, *args, **kwargs):
+        self.in_menus = []
+        super(Reportage, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'REPORTAGE'
+
+class Reportage_pic(models.Model):
+    Reportage = models.ForeignKey("Reportage")
+    image = FileField(verbose_name=_("Image"),
+        upload_to=upload_to("MAIN.Reportage", "Reportage"),
+        format="Image", max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'GALLERIE'
 
 
 

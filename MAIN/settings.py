@@ -100,7 +100,9 @@ EMAIL_HOST_PASSWORD = 'q54a45q8a'
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
-# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
+BLOG_SLUG = 'articles'
+BLOG_POST_PER_PAGE = 18
 
 # If True, the django-modeltranslation will be added to the
 # INSTALLED_APPS setting.
