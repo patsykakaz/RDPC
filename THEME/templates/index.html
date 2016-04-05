@@ -26,7 +26,14 @@
                 {% endfor %}
             </div>
         </div>
-        <div class='col-md-5'></div>
+        <div class='col-md-5'>
+            <div>
+                {% for blogPost in restricted_blogPosts %}
+                    <h3>{{ blogPost.title }}</h3>
+                    <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:110 }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
