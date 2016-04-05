@@ -2,11 +2,7 @@
 {% load i18n pages_tags mezzanine_tags blog_tags keyword_tags staticfiles %}
 
 {% block meta_keywords %}
-    {% if request.get_host == 'pns.pnpapetier.com' %}
-        magazine, actualités, spécialiste, innovation, culture numérique
-    {% elif request.get_host == 'tendances.pnpapetier.com' %}
-        magazine, actualités, spécialiste, loisirs créatifs, beaux arts, tendance
-    {% elif request.get_host == 'lalettre.pnpapetier.com' %}
+    {% if request.get_host == 'lalettre.papiercarton.com' %}
         magazine, actualités, spécialiste, économie, distributeurs, fournisseurs, marketing, mouvement, évènement
     {% else %}
         magazine, actualités, spécialiste, papeterie, bureautique, fournitures de bureau
@@ -14,11 +10,7 @@
 {% endblock %}
 
 {% block meta_description %}
-    {% if request.get_host == 'pns.pnpapetier.com' %}
-        Retrouvez les derniers articles sur les innovations du secteur et sur l’actualité de la culture numérique.
-    {% elif request.get_host == 'tendances.pnpapetier.com' %}
-        Toute l’actualité des loisirs créatifs et des beaux arts liés au secteur de la papeterie.
-    {% elif request.get_host == 'lalettre.pnpapetier.com' %}
+    {% if request.get_host == 'lalettre.papiercarton.com' %}
         Toute l’actualité du secteur de la papeterie, de la bureautique, des fournitures de bureau et des consommables.
     {% else %}
         Avec le magazine PNP, retrouvez l'actualité du secteur de la papeterie, bureautique et fournitures de bureau.
@@ -27,11 +19,7 @@
 
 
 {% block meta_title %}
-    {% if request.get_host == 'pns.pnpapetier.com' %}
-        Magazine PNS, innovations et culture numérique
-    {% elif request.get_host == 'tendances.pnpapetier.com' %}
-        Magazine Tendances, beaux arts et loisirs créatifs
-    {% elif request.get_host == 'lalettre.pnpapetier.com' %}
+    {% if request.get_host == 'lalettre.papiercarton.com' %}
         La Lettre PNP, l’actualité du métier en temps réel
     {% else %}
         Magazine PNP, le magazine spécialiste du secteur du papier
@@ -43,6 +31,9 @@
     <style>
         {% for site in all_sites %}
         {% if site.domain == request.get_host %}
+            #contentNav{
+                margin-bottom: 0;
+            }
             #logo_blog.{{ site.css_class }}{
                 background-color: {{ site.color }};
             }
@@ -65,7 +56,7 @@
     {% for site in all_sites %}
     {% if site.domain == request.get_host %}
     <div id='logo_blog' class='{{ site.css_class }} text-center'>
-        <img src='{{ MEDIA_URL }}SITES/banner/{{ site.img_banner }}' alt='logo PNP' />
+        <img src='{{ MEDIA_URL }}SITES/banner/{{ site.img_banner }}' alt='logo site' />
     </div>
     <div class='container'>
         <div class='col-sm-8 col-sm-offset-2 col-md-12 col-md-offset-0'>
@@ -117,7 +108,7 @@
                     {% endif %}
                     </div>
                 {% endwith %}
-		<div class='date'>{{ blog_post.created|date:"d/m/Y" }}</div>
+                <div class='date'>{{ blog_post.created|date:"d/m/Y" }}</div>
                 <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 300 200 %}' alt='illustration {{ blog_post.title }}' />
                 <div class='bloc_article_title'>
                     <h4><i class='fa fa-arrow-right'></i> {{ blog_post.title|truncatechars:60 }}</h4>

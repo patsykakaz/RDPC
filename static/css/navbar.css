@@ -155,6 +155,7 @@
 #contentNav{
     position: relative;
     z-index: 9;
+    margin-bottom: 50px;
     border-bottom: none;
 }
 .navbar{

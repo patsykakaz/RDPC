@@ -8,30 +8,80 @@
 {% endblock %}
 {% block meta_title %}PNP Papetier, magazine spécialiste de la papeterie{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/main.css" %}">
+{% endblock %}
+
 {% block main %}
 <div class='container'>
     <div class='row'>
-        <div class='col-md-7'>
-            <div id='reportage'>{{ reportage.title }}
-                {% for pic in reportage.inlines %}
-                    {{ pic.image }} <br /> {{ pic.description }}
-                {% endfor %}
+        <div class='col-md-8'>
+            <div id='reportage'>
+                <h4>
+                    <span style='#B60513'>Le dossier de la semaine</span> : <strong>{{ reportage.title }}</strong>
+                </h4>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        {% for pic in reportage.inlines %}
+                        <div class="item{% if forloop.counter0 == 0 %} active{% endif %}">
+                            <img src="{{ MEDIA_URL }}{% thumbnail pic.image 0 300 %}" alt="illustration carousel">
+                            <div class="carousel-caption">
+                                {{ pic.description }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
             <div id='free_articles'>
                 {% for blogPost in last_blogPosts %}
-                <div class=''>
-                    <h3>{{ blogPost.title }}</h3>
-                    <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:110 }}</p>
+                <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
+                <div class='blogPost'>
+                    {% if blogPost.featured_image %}
+                    <div class='blogPost_illustration'>
+                        <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 0 200 %}' alt='illustration article' />
+                    </div>
+                    {% endif %}
+                    <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
+                        <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title|capfirst }}</h3>
+                        <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
+                    </div>
                 </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
-        <div class='col-md-5'>
-            <div>
-                {% for blogPost in restricted_blogPosts %}
-                    <h3>{{ blogPost.title }}</h3>
-                    <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:110 }}</p>
-                {% endfor %}
+        <div class='col-md-4'>
+            <div style='padding:10px; border: 1px solid rgb(230,230,230);'>
+                <h5 class='text-center' style='color:#FEC10D'>Espace Abonnés</h5>
+                <div class='blogPost'>
+                    {% for blogPost in restricted_blogPosts %}
+                        <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
+                        <div class='blogPost_caption'>
+                            <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title }}</h3>
+                            <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
+                        </div>
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

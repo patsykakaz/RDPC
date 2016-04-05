@@ -1,6 +1,10 @@
 @charset "UTF-8";
 
 
+.carousel img{
+    margin: auto;
+}
+
 .pager li > a, .pager li > span{
     margin: 5px 20px;
     border-radius: 3px;

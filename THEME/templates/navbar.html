@@ -31,7 +31,9 @@
             <li class='dropdown dropdown-custom {{ site.css_class }} {% if site.domain == request.get_host and 'articles' in request.get_full_path %}active{% endif %}'>
                 <a class='dropdown-toggle text-center' href='//{{ site.domain }}/articles/'>
                 <div class='site_title'> {{ site.name|upper }} </div>
-                <div class='site_sub_title {{ site.css_class }}'> {{ site.title_sub }} </div>
+                <div class='site_sub_title {{ site.css_class }}'>
+                    {{ site.title_sub }}
+                </div>
                 </a>
             </li>
             {% endfor %}
@@ -45,8 +47,8 @@
             </li>
             <li class="dropdown {% if page.is_current_or_ascendant %}active{% endif %}" id="univers_PNP">
                 <a href="{{ page.get_absolute_url }}" class="dropdown-toggle text-center" data-toggle="dropdown">
-                    UNIVERS PNP
-                    <span class='mobileTitle'>UNIVERS PNP</span>
+                    UNIVERS RDPC
+                    <span class='mobileTitle'>UNIVERS RDPC</span>
                 </a>
                 <ul class="dropdown-menu text-center">
                 {% for page_univ in pages_univers %}
