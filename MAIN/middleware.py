@@ -18,6 +18,8 @@ class AuthXMiddleware(object):
         forbidden_domain = "lalettre"
         if forbidden_domain in request.META['HTTP_HOST'] and settings.BLOG_SLUG in request.path and not request.user.is_authenticated():
             return HttpResponseRedirect('/user/login?next='+request.path)
+        else:
+            print 'USER IS CLEAR'
 
 class NavMiddleware(object):
     def process_template_response(self, request, response):
@@ -28,16 +30,15 @@ class NavMiddleware(object):
         restrictedSite = Site.objects.get(name="LA LETTRE")
         reportage = Reportage._base_manager.last()
         if reportage: 
-            reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage).exclude(status=1)
-
+            reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
         last_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
         restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)
         # fetch color code
-        # for post in last_blogPosts:
-        #     try:
-        #         post.extension_site = SiteExtension._base_manager.get(site=post.site)
-        #     except:
-        #         post.extension_site = False
+        for post in last_blogPosts:
+            try:
+                post.extension_site = SiteExtension._base_manager.get(site=post.site)
+            except:
+                post.extension_site = False
 
         for site in all_sites:
             site.all_cat = BlogCategory._base_manager.filter(site=site.id)

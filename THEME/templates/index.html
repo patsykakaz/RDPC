@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load pages_tags blog_tags mezzanine_tags keyword_tags i18n staticfiles %}
 {% block meta_keywords %}
-    magazine, spécialiste, papeterie, fournitures, consommables, loisirs créatifs, innovation, actualités
+    keywords
 {% endblock %}
 {% block meta_description %}
-    Le magazine PNP Papetier vous informe sur toute l'actualité du secteur de la papeterie, fournitures de bureau, consommables et loisirs créatifs. 
+    meta_description
 {% endblock %}
-{% block meta_title %}PNP Papetier, magazine spécialiste de la papeterie{% endblock %}
+{% block meta_title %}PAPIERCARTON{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/main.css" %}">
@@ -67,7 +67,7 @@
                     </div>
                     {% endif %}
                     <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
-                        <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title|capfirst }}</h3>
+                        <h3><i class='fa fa-chevron-right' style='color: {{ blogPost.extension_site.color }}'></i> {{ blogPost.title|capfirst }}</h3>
                         <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
                     </div>
                 </div>
@@ -78,16 +78,16 @@
         <div class='col-md-4'>
             <div style='padding:10px; border: 1px solid rgb(230,230,230);'>
                 <h5 class='text-center' style='color:#FEC10D'>Espace Abonnés</h5>
-                <div class='blogPost'>
-                    {% for blogPost in restricted_blogPosts %}
+                {% for blogPost in restricted_blogPosts %}
+                    <div class='blogPost'>
                         <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
                         <div class='blogPost_caption'>
                             <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title }}</h3>
                             <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
                         </div>
                         </a>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

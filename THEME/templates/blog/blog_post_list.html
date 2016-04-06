@@ -38,19 +38,25 @@
                 background-color: {{ site.color }};
             }
             #baseline.{{ site.css_class }}{
-            color: {{ site.color }};
+                color: {{ site.color }};
             }
-            .bloc_article .label{
-                background-color: {{ site.color }};
-                border-color: white;
+            .bloc_article h3{
+                color: {{ site.color }};
+            }.bloc_article h3 i{
+                color: {{ site.color }};
+            }.bloc_article h3 .date{
+                color: #777;
+            }
+            .bloc_article .categories{
+                color: #007099;
             }
         {% endif %}
         {% endfor %}
     </style>
     {% endblock %}
 
-    {% block extra_js %}
-    {% endblock %}
+{% block extra_js %}
+{% endblock %}
 
 {% block main %}
     {% for site in all_sites %}
@@ -67,7 +73,7 @@
     </div>
     {% endif %}
     {% endfor %}
-    <div class='container text-center'>
+    <div class='container'>
         {% if tag or category or year or month or author %}
             {% block blog_post_list_filterinfo %}
             <p>
@@ -97,23 +103,30 @@
         {% endif %}
 
         {% for blog_post in blog_posts.object_list %}
-            <a class='bloc_article col-md-4' 
+            <a class='bloc_article col-md-12' 
                 href='//{{ blog_post.site.domain }}{% url "blog_post_detail" blog_post.slug %}' >
-                {% with blog_post.categories.all as categories %}
-                    <div class='label'>
-                    {% if categories %}
-                        {{ categories.first }}
-                    {% elif blog_post.archive %}
-                        archives
-                    {% endif %}
-                    </div>
-                {% endwith %}
-                <div class='date'>{{ blog_post.created|date:"d/m/Y" }}</div>
-                <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 300 200 %}' alt='illustration {{ blog_post.title }}' />
                 <div class='bloc_article_title'>
-                    <h4><i class='fa fa-arrow-right'></i> {{ blog_post.title|truncatechars:60 }}</h4>
-                    <div class='blogPost-caption'>{{ blog_post.description_from_content|safe|striptags|truncatechars:110 }}</div>
+                    <h3>
+                        <div class='date'>{{ blog_post.created|date:"d/m/Y" }}</div>
+                        <i class='fa fa-arrow-right'></i>
+                        {{ blog_post.title|truncatechars:120 }}
+                    </h3>
+                    {% if blog_post.categories.all|length > 0 %}
+                        {% with blog_post.categories.all as categories %}
+                            <div class='categories'>
+                            {% if categories %}
+                                {{ categories.first }}
+                            {% elif blog_post.archive %}
+                                archives
+                            {% endif %}
+                            </div>
+                        {% endwith %}
+                    {% endif %}
+                    <div class='blogPost-caption'>{{ blog_post.description_from_content|safe|striptags|truncatechars:300 }}</div>
                 </div>
+                {% if blog_post.featured_image %}
+                    <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 0 200 %}' alt='illustration {{ blog_post.title }}' />
+                {% endif %}
             </a>
             {% if forloop.counter == 2 %}
                 {% if banners.0 %}

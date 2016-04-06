@@ -22,7 +22,7 @@ MAIN_SITE = "localhost:8000"
 LOGIN_URL = reverse_lazy('USERMGMT.views.connect')
 ADMINS = [('Philippe','philippe@lesidecar.fr'),]
 # refTitre for abonnement
-REF_ABO = 26
+REF_ABO = 16
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.ddn.fr'
@@ -78,25 +78,24 @@ EMAIL_HOST_PASSWORD = 'q54a45q8a'
 # field instance. When specifying the field class, the path
 # ``django.models.db.`` can be omitted for regular Django model fields.
 #
-# EXTRA_MODEL_FIELDS = (
-#     (
-#         # Dotted path to field.
-#         "mezzanine.blog.models.BlogPost.image",
-#         # Dotted path to field class.
-#         "somelib.fields.ImageField",
-#         # Positional args for field class.
-#         (_("Image"),),
-#         # Keyword args for field class.
-#         {"blank": True, "upload_to": "blog"},
-#     ),
-#     # Example of adding a field to *all* of Mezzanine's content types:
-#     (
-#         "mezzanine.pages.models.Page.another_field",
-#         "IntegerField", # 'django.db.models.' is implied if path is omitted.
-#         (_("Another name"),),
-#         {"blank": True, "default": 1},
-#     ),
-# )
+EXTRA_MODEL_FIELDS = (
+    (
+        "mezzanine.blog.models.BlogPost.resize",
+        "BooleanField",
+        (_("Empecher le redimensionnement de l'image"),),
+        {"blank": True, "default": False},
+    ),
+    (
+        # Dotted path to field.
+        "mezzanine.blog.models.BlogPost.archive",
+        # Dotted path to field class.
+        "BooleanField",
+        # Positional args for field class.
+        (_("Archive"),),
+        # Keyword args for field class.
+        {"blank": True, "default": False},
+    ),
+)
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
@@ -115,7 +114,7 @@ USE_MODELTRANSLATION = False
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -142,6 +141,8 @@ LANGUAGES = (
 # are displayed for error pages. Should always be set to ``False`` in
 # production. Best set to ``True`` in local_settings.py
 DEBUG = True
+
+TINYMCE_SETUP_JS = "js/tinyMCE_setup.js"
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

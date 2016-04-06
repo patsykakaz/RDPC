@@ -4,10 +4,12 @@
     background-color: rgba(0,0,0,.33);
 }
 
-#free_articles .blogPost{
+.blogPost{
     position: relative;
-    height: 150px;
     margin-top: 20px;
+}
+#free_articles .blogPost{
+    height: 150px;
 }
 .blogPost_illustration{
     overflow: hidden;
@@ -17,11 +19,11 @@
     height: 100%;
     top: 0;
 }.blogPost_illustration img{
-    width: 100%;
-    max-width: 100%;
+    min-width: 100%;
     min-height: 100%;
 }
 .blogPost_caption{
+    overflow: hidden;
     min-height: 80px;
     padding: 10px 20px;
     background-color: white;

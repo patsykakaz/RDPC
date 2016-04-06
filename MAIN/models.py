@@ -21,15 +21,6 @@ class Client(models.Model):
     is_active = True
     is_staff= False
 
-class Archive(Page, RichText):
-    illustration = models.CharField(max_length=200,verbose_name='illustration',null=True,blank=True)
-
-    def save(self, *args, **kwargs):
-        # in_menus empty pour exclure les archives des content_tree
-        self.in_menus = []
-        self.content = self.content.replace('src="','src="/static/archives/')
-        super(Archive, self).save(*args, **kwargs)
-
 class SiteExtension(Page):
     color = ColorField(default='#007099')
     img_logo = models.ImageField(upload_to=MEDIA_ROOT+'/SITES/logo', null=True, blank=True, verbose_name='logo')
