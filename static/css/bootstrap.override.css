@@ -4,6 +4,13 @@
 .carousel img{
     margin: auto;
 }
+.carousel-caption{
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
+}
+.carousel-indicators{
+    top: 0;
+}
 
 .pager li > a, .pager li > span{
     margin: 5px 20px;

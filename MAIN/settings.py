@@ -12,9 +12,6 @@ from django.core.urlresolvers import reverse_lazy
 ######################
 
 # Make these unique, and don't share it with anybody.
-SECRET_KEY = ")0&6f6j@x0g+=#w#4+@h9c-+8k_4+q(g4)&!9!^7uwv6t_##ax"
-NEVERCACHE_KEY = "31w7nyzx3*$va70a6d3s#of30g*o5%w1oontf$@)^w7yt%pd5("
-
 SECRET_KEY = "7u7x#t#m=e*5-i*ix_7xb+fmbqkoz_h86d1oymw)%x#v4*29wg"
 NEVERCACHE_KEY = "dzrl6r@^94q+p9bp0!xvru)i7(=5xspw97%uj5unhuqb)^ro%%"
 
@@ -83,7 +80,7 @@ EXTRA_MODEL_FIELDS = (
         "mezzanine.blog.models.BlogPost.resize",
         "BooleanField",
         (_("Empecher le redimensionnement de l'image"),),
-        {"blank": True, "default": False},
+        {"blank": True, "default": True},
     ),
     (
         # Dotted path to field.
