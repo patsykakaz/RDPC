@@ -27,13 +27,11 @@ class NavMiddleware(object):
         all_sites = Site.objects.all()
         restrictedSite = Site.objects.get(name="LA LETTRE")
         reportage = Reportage._base_manager.last()
-        reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
+        if reportage: 
+            reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage).exclude(status=1)
 
-        # last_blogPosts = BlogPost._base_manager.exclude(id__in=mainArticles).exclude(status=1)[0:18]
         last_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
-        print "last_blogPosts = %s" % last_blogPosts
-        restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite)
-        print "restricted_blogPosts = %s" % restricted_blogPosts
+        restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)
         # fetch color code
         # for post in last_blogPosts:
         #     try:
