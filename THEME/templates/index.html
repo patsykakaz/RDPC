@@ -66,9 +66,9 @@
                 <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
                 <div class='blogPost'>
                     {% if blogPost.featured_image %}
-                    <div class='blogPost_illustration'>
-                        <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 0 200 %}' alt='illustration article' />
-                    </div>
+                        <div class='blogPost_illustration'>
+                            <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 0 200 %}' alt='illustration article' />
+                        </div>
                     {% endif %}
                     <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
                         <h3><i class='fa fa-chevron-right' style='color: {{ blogPost.extension_site.color }}'></i> {{ blogPost.title|capfirst }}</h3>
@@ -80,11 +80,10 @@
             </div>
         </div>
         <div class='col-md-4'>
-            <div>
-                <a href=''>
-                    <img src='{% static "img/redirect_transfoplus.jpg" %}' alt='redirection vers transfoplus'>
-                </a>
-            </div>
+            <a href=''>
+                <div class='text-center' style='height:100px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.jpg" %}") center center; overflow:hidden;'>
+                </div>
+            </a>
             <div style='padding:10px; border: 1px solid rgb(230,230,230);'>
                 <h5 class='text-center' style='color:#FEC10D'>Espace Abonnés</h5>
                 {% for blogPost in restricted_blogPosts %}
