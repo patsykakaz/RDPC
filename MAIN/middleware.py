@@ -31,10 +31,10 @@ class NavMiddleware(object):
         reportage = Reportage._base_manager.last()
         if reportage: 
             reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
-        last_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
         restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)
+        free_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
         # fetch color code
-        for post in last_blogPosts:
+        for post in free_blogPosts:
             try:
                 post.extension_site = SiteExtension._base_manager.get(site=post.site)
             except:
@@ -63,7 +63,7 @@ class NavMiddleware(object):
 
         response.context_data['mainSite'] = settings.MAIN_SITE
         response.context_data['all_sites'] = all_sites
-        response.context_data['last_blogPosts'] = last_blogPosts
+        response.context_data['free_blogPosts'] = free_blogPosts
         response.context_data['restricted_blogPosts'] = restricted_blogPosts
         response.context_data['reportage'] = reportage
         return response

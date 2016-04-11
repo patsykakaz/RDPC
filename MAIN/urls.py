@@ -37,7 +37,6 @@ urlpatterns += patterns('',
     # one homepage pattern, so if you use a different one, comment this
     # one out.
     url(r'^user/', include('USERMGMT.urls')),
-    # url(r'^kill$', 'MAIN.views.kill', name='kill'),
     url(r'^archive/(?P<start>.+)/(?P<end>.+)/$', 'MAIN.views.archive', name='archive'),
     url(r"^$", direct_to_template, {"template": "index.html"}, name="home"),
 

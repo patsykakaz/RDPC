@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load pages_tags blog_tags mezzanine_tags keyword_tags i18n staticfiles %}
+{% load pages_tags blog_tags mezzanine_tags keyword_tags i18n staticfiles custom_tags %}
 {% block meta_keywords %}
     keywords
 {% endblock %}
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div id='free_articles'>
-                {% for blogPost in last_blogPosts %}
+                {% for blogPost in free_blogPosts %}
                 <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
                 <div class='blogPost'>
                     {% if blogPost.featured_image %}
@@ -72,6 +72,8 @@
                     {% endif %}
                     <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
                         <h3><i class='fa fa-chevron-right' style='color: {{ blogPost.extension_site.color }}'></i> {{ blogPost.title|capfirst }}</h3>
+                        <div class='date'>{{ blogPost.created }}</div>
+                        <div class='categories'></div>
                         <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
                     </div>
                 </div>
@@ -84,13 +86,15 @@
                 <div class='text-center' style='height:100px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.jpg" %}") center center; overflow:hidden;'>
                 </div>
             </a>
-            <div style='padding:10px; border: 1px solid rgb(230,230,230);'>
+            <div style='padding:10px; background-color:rgb(254,255,198); border:1px solid rgb(230,230,230);'>
                 <h5 class='text-center' style='color:#FEC10D'>Espace Abonnés</h5>
                 {% for blogPost in restricted_blogPosts %}
                     <div class='blogPost'>
                         <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
                         <div class='blogPost_caption'>
                             <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title }}</h3>
+                            <div class='date'>{{ blogPost.created }}</div>
+                            <div class='categories'></div>
                             <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
                         </div>
                         </a>
