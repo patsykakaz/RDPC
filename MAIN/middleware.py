@@ -12,6 +12,7 @@ from mezzanine.conf import settings
 from mezzanine.blog.models import BlogCategory, BlogPost
 from models import *
 
+import itertools
 
 class AuthXMiddleware(object):
     def process_request(self,request):
@@ -29,12 +30,14 @@ class NavMiddleware(object):
         all_sites = Site.objects.all()
         restrictedSite = Site.objects.get(name="LA LETTRE")
         reportage = Reportage._base_manager.last()
-        if reportage: 
+        if reportage:
             reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
         restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)
-        free_blogPosts = BlogPost._base_manager.exclude(site=restrictedSite)
+        sommaireCat = BlogCategory._base_manager.get(title='Sommaire')
+        free_blogPosts = list(BlogPost._base_manager.exclude(site=restrictedSite).exclude(categories=sommaireCat))
+        last_sommaire = BlogPost._base_manager.filter(categories=sommaireCat)[0]
         # fetch color code
-        for post in free_blogPosts:
+        for post in itertools.chain(free_blogPosts,restricted_blogPosts):
             try:
                 post.extension_site = SiteExtension._base_manager.get(site=post.site)
             except:
@@ -64,6 +67,7 @@ class NavMiddleware(object):
         response.context_data['mainSite'] = settings.MAIN_SITE
         response.context_data['all_sites'] = all_sites
         response.context_data['free_blogPosts'] = free_blogPosts
+        response.context_data['last_sommaire'] = last_sommaire
         response.context_data['restricted_blogPosts'] = restricted_blogPosts
         response.context_data['reportage'] = reportage
         return response

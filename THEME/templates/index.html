@@ -26,76 +26,96 @@
                         {{ reportage.title }}
                     </span>
                 </h4>
-                <div id="carousel" class="carousel slide" data-ride="carousel">
-                    {% if reportage.inlines|length < 6 %}
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        {% for element in reportage.inlines %}
-                            <li data-target="#carousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %}class="active"{% endif %}></li>
-                        {% endfor %}
-                    </ol>
-                    {% endif %}
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        {% for pic in reportage.inlines %}
-                        <div class="item {% if forloop.counter0 == 0 %} active{% endif %}">
-                            <img src="{{ MEDIA_URL }}{% thumbnail pic.image 0 300 %}" alt="illustration carousel">
-                            {% if pic.description %}
-                            <div class="carousel-caption">
-                                {{ pic.description }}
+                <div id='slider-mask'>
+                    <div id='slider-layer'>
+                        <div id='slider'>
+                            <!-- UNIVERS -->
+                            {% for element in reportage.inlines %}
+                            <div class='slider-item'>
+                                <img src='{{ MEDIA_URL }}{% thumbnail element.image 0 300 %}' alt="illustration carousel"/>
+                                {% if element.description %}
+                                <div class='slider-item-caption'>
+                                    <p>{{ element.description|truncatechars:150 }}</p>
+                                </div>
+                                {% endif %}
                             </div>
-                            {% endif %}
+                            {% endfor %}
+                            <!-- UNIVERS -->
                         </div>
-                        {% endfor %}
                     </div>
-
                     <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
+                    <a id='slider-control-left' class='slider-control' href="javascript:void(0);">
+                        <btn class='fa fa-chevron-left'></btn>
                     </a>
-                    <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
+                    <a id='slider-control-right' class='slider-control' href="javascript:void(0);">
+                        <btn class='fa fa-chevron-right'></btn>
                     </a>
                 </div>
             </div>
+
             <div id='free_articles'>
+                <a href='//{{ last_sommaire.site.domain }}{{ last_sommaire.get_absolute_url }}'>
+                    <div class='blogPost'>
+                        <div class='blogPost_illustration'>
+                            <img src='{{ MEDIA_URL }}{% thumbnail last_sommaire.featured_image 100 150 %}' alt='illustration article' />
+                        </div>
+                        <div class='blogPost_caption {% if last_sommaire.featured_image %}half{% endif %}'>
+                            <h3>
+                                <b style='color:#007099;'>SOMMAIRE</b> <i class='fa fa-chevron-right'></i>
+                                {{ last_sommaire.title|capfirst }}
+                            </h3>
+                            <div class='date'>{{ last_sommaire.created|date:"d.m.Y" }}</div>
+                            <p>{% if last_sommaire.featured_image %}{{ last_sommaire.description_from_content|safe|striptags|truncatechars:125 }}{% else %}{{ last_sommaire.description_from_content|safe|striptags|truncatechars:175 }}{% endif %}</p>
+                        </div>
+                    </div>
+                </a>
                 {% for blogPost in free_blogPosts %}
                 <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
-                <div class='blogPost'>
+                <div class='blogPost {{ blogPost.extension_site.css_class }}'>
                     {% if blogPost.featured_image %}
                         <div class='blogPost_illustration'>
-                            <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 0 200 %}' alt='illustration article' />
+                            <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 100 150 %}' alt='illustration article' />
                         </div>
                     {% endif %}
                     <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
                         <h3><i class='fa fa-chevron-right' style='color: {{ blogPost.extension_site.color }}'></i> {{ blogPost.title|capfirst }}</h3>
-                        <div class='date'>{{ blogPost.created }}</div>
-                        <div class='categories'></div>
-                        <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
+                        <div class='date'>{{ blogPost.created|date:"d.m.Y" }}</div>
+                        {% if blogPost.categories.first %}
+                        <div class='categories'>
+                            {{ blogPost.categories.first }}
+                        </div>
+                        {% endif %}
+                        <p>{% if blogPost.featured_image %}{{ blogPost.description_from_content|safe|striptags|truncatechars:125 }}{% else %}{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}{% endif %}</p>
                     </div>
                 </div>
                 </a>
                 {% endfor %}
             </div>
         </div>
-        <div class='col-md-4'>
+        <div id='premium' class='col-md-4'>
             <a href=''>
-                <div class='text-center' style='height:100px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.jpg" %}") center center; overflow:hidden;'>
+                <div class='text-center' style='height:150px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.jpg" %}") center center no-repeat; overflow:hidden; border:1px solid rgb(220,220,220);'>
                 </div>
             </a>
-            <div style='padding:10px; background-color:rgb(254,255,198); border:1px solid rgb(230,230,230);'>
-                <h5 class='text-center' style='color:#FEC10D'>Espace Abonnés</h5>
+            <div style='padding:10px; background-color:#FEC10D; border:1px solid rgb(230,230,230);'>
+                <h3 class='text-center' style='color:white;'>Espace Abonnés</h3>
                 {% for blogPost in restricted_blogPosts %}
-                    <div class='blogPost'>
+                    <div class='blogPost {{ blogPost.extension_site.css_class }}'>
                         <a href='//{{ blogPost.site.domain }}{% url "blog_post_detail" blogPost.slug %}'>
                         <div class='blogPost_caption'>
-                            <h3><i class='fa fa-chevron-right'></i> {{ blogPost.title }}</h3>
-                            <div class='date'>{{ blogPost.created }}</div>
-                            <div class='categories'></div>
-                            <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}</p>
+                            <h3 {% if blogPost.featured_image %}class='half'{% endif %}>
+                                <i class='fa fa-chevron-right'></i> {{ blogPost.title }}
+                            </h3>
+                            {% if blogPost.featured_image %}
+                                <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 80 80 %}' alt='illustration article' />
+                            {% endif %}
+                            <div class='date'>{{ blogPost.created|date:"d.m.Y" }}</div>
+                            {% if blogPost.categories.first %}
+                            <div class='categories'>
+                                {{ blogPost.categories.first }}
+                            </div>
+                            {% endif %}
+                            <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:90 }}</p>
                         </div>
                         </a>
                     </div>

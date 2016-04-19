@@ -9,8 +9,9 @@ from mezzanine.blog.admin import BlogPostAdmin
 from mezzanine.blog.models import BlogPost
 
 blog_fieldsets = deepcopy(BlogPostAdmin.fieldsets)
-blog_fieldsets[0][1]["fields"].insert(-2, "archive")
+# blog_fieldsets[0][1]["fields"].insert(-2, "archive")
 blog_fieldsets[0][1]["fields"].insert(-2, "resize")
+blog_fieldsets[0][1]["fields"].insert(-2, "highlight")
 class MyBlogPostAdmin(BlogPostAdmin):
    fieldsets = blog_fieldsets
 

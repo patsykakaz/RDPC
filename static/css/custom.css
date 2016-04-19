@@ -194,15 +194,17 @@ strong{
     color: #777;
     font-weight: normal;
 }
-.bloc_article .categories{
-    margin: 0;
-    padding: 0;
-    opacity: .9;
+.blogPost .categories{
+    display: inline-block;
+    margin: 0 0 10px 0;
+    padding: 0 5px;
+    opacity: .85;
+    color: #FFFFFF;
     -moz-transition: all .2s ease-in-out;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
-}.bloc_article:hover .label{
+}.blogPost:hover .categories{
     opacity: 1;
 }
 

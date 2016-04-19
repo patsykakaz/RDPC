@@ -15,7 +15,7 @@
     overflow: hidden;
     position: absolute;
     left: 0;
-    width: 33%;
+    width: 16%;
     height: 100%;
     top: 0;
 }.blogPost_illustration img{
@@ -34,14 +34,179 @@
 }
 .blogPost_caption.half{
     position: absolute;
-    left: calc(33% + 20px);
+    left: calc(16% + 20px);
     top: 0;
-    width: calc(67% - 20px);
+    width: calc(84% - 20px);
 }
 .blogPost_caption h3{
     margin-top: 10px;
     font-size: 20px;
 }
+#premium .blogPost_caption h3.half{
+    display: inline-block;
+    width: calc(100% - 95px);
+}
+#premium .blogPost_caption img{
+    width: 70px;
+    margin: 10px 0 0 20px;
+    vertical-align: top;
+}
 .blogPost_caption i{
     font-size: 16px;
 }
+
+
+
+
+
+/* SLIDER */
+#slider-mask{
+    position: relative;
+}
+#slider-layer{
+    overflow: auto;
+    background: transparent;
+}
+#slider{
+    width: 5000px;
+    padding: 0 0 0 20px;
+}
+.slider-item{
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 303.75px;
+    margin-right: 15px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+.slider-item-caption{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    text-shadow: 2px 1px rgba(50,50,50,.3);
+    background-color: rgba(0,0,0,.4);
+}.slider-item-caption p{
+    display: inline-block;
+    padding: 6px;
+}
+
+.slider-item img{
+    width: 540px;
+}
+@media screen and (max-width: 900px){
+    .slider-item-caption{
+        bottom: 50px;
+        font-size: 27px;
+    }
+    .slider-item{
+        height: 241.875px;
+    }
+    .slider-item img{
+        width: 430px;
+    }
+}
+@media screen and (max-width: 485px){
+    .slider-item-caption{
+        bottom: 40px;
+        font-size: 19px;
+    }
+    .slider-item{
+        height: 180px;
+    }
+    .slider-item img{
+        width: 320px;
+    }
+}
+.slider-control{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10%;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+    filter: alpha(opacity=50);
+    opacity: .5;
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+#slider-control-left {
+    background-image: -webkit-linear-gradient(left, rgba(40, 40, 40, .7) 0%, rgba(40, 40, 40, .0001) 100%);
+    background-image:  -o-linear-gradient(left, rgba(40, 40, 40, .7) 0%, rgba(40, 40, 40, .0001) 100%);
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(40, 40, 40, .7)),
+        to(rgba(40, 40, 40, .0001)));
+    background-image: linear-gradient(to right, rgba(40, 40, 40, .7) 0%, rgba(40, 40, 40, .0001) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000',
+        endColorstr='#00000000', GradientType=1);
+    background-repeat: repeat-x;
+}
+#slider-control-right {
+    right: 0;
+    left: auto;
+    background-image: -webkit-linear-gradient(left, rgba(40, 40, 40, .0001) 0%, rgba(40, 0, 40, .7) 100%);
+    background-image: -o-linear-gradient(left, rgba(40, 40, 40, .0001) 0%, rgba(40, 40, 40, .7) 100%);
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(40, 40, 40, .0001)),
+        to(rgba(40, 40, 40, .7)));
+    background-image: linear-gradient(to right, rgba(40, 40, 40, .0001) 0%, rgba(40, 40, 40, .7) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',
+        endColorstr='#80000000', GradientType=1);
+    background-repeat: repeat-x;
+}
+.slider-control:hover{
+    color: #fff;
+    text-decoration: none;
+    filter: alpha(opacity=100);
+    outline: 0;
+    opacity: 1;
+}
+@media screen and (max-width: 900px){
+    .slider-control{
+        filter: alpha(opacity=50);
+        opacity: .5;
+        width: 15%;
+    }
+}
+@media screen and (max-width: 485px){
+    .slider-control{
+        filter: alpha(opacity=80);
+        opacity: .8;
+        width: 20%;
+    }
+}
+.slider-control .fa{
+    position: absolute;
+    top: 45%;
+    z-index: 5;
+    display: inline-block;
+    font-size: 35px;
+    color: white;
+}#slider-control-left .fa{
+    left: 35%;
+    margin-left: -10px;
+}#slider-control-right .fa{
+    right: 35%;
+    margin-right: -10px;
+}
+.slider-control-on{
+    opacity: .75;
+}
+@media screen and (min-width: 1150px){
+    .slider-control .fa{
+        font-size: 45px;
+    }
+}
+@media screen and (max-width: 485px){
+    .slider-control .fa{
+        font-size: 25px;
+    }
+}
+/* SLIDER */
