@@ -15,10 +15,16 @@ $(document).ready(function(){
         });
     });
     $('.caption-screen').first().addClass('first');
-    adapt_slider_width();
-    slider_items_midPosition_array = create_slider_array();
-    center_slider_animated();
-    placement_slider_control();
+    if($('#slider').length){
+        adapt_slider_width();
+        slider_items_midPosition_array = create_slider_array();
+        center_slider_animated();
+        placement_slider_control();
+    }
+    deployAds();
+    $(window).scroll(function(){
+        deployAds();
+    });
 });
 
 $(window).resize(function(){
@@ -245,3 +251,13 @@ $(document).ready(function(){
 
 // SLIDER
 
+
+// Ad management
+function deployAds(){
+    $('.layer-banner').each(function(){
+        if($(this).offset().top < $(window).scrollTop() + $(window).height()/1.3 && !$(this).hasClass('deploy')){
+            $(this).addClass('deploy');
+        }
+    });
+}
+// ./Ad management

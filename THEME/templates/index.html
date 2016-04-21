@@ -89,12 +89,44 @@
                     </div>
                 </div>
                 </a>
+                    {% if forloop.counter == 2 and banners.0.title %}
+                        <div class='row'>
+                        {# <div class='layer-banner layer-banner-mobile col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1'> #}
+                        <div class='col-md-12'>
+                            <a href='{{ banners.0.lien }}' target='blank'>
+                                <div class='container-banner'>
+                                    <img src='/static/media/publicite/{{ banners.0.media }}' />
+                                </div>
+                            </a>
+                        </div>
+                        </div>
+                    {% elif forloop.counter == 5 and banners.1.title %}
+                        <div class='row'>
+                        <div class='layer-banner layer-banner-mobile col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1'>
+                            <a href='{{ banners.1.lien }}' target='blank'>
+                                <div class='container-banner'>
+                                    <img src='/static/media/publicite/{{ banners.1.media }}' />
+                                </div>
+                            </a>
+                        </div>
+                        </div>
+                    {% elif forloop.counter == 8 and banners.2.title %}
+                        <div class='row'>
+                        <div class='layer-banner layer-banner-mobile col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1'>
+                            <a href='{{ banners.2.lien }}' target='blank'>
+                                <div class='container-banner'>
+                                    <img src='/static/media/publicite/{{ banners.2.media }}' />
+                                </div>
+                            </a>
+                        </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
         <div id='premium' class='col-md-4'>
             <a href=''>
-                <div class='text-center' style='height:150px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.png" %}") center center no-repeat; overflow:hidden; border:1px solid rgb(220,220,220);'>
+                <div class='text-center' style='height:180px; margin: 40px 0 20px 0; background:url("{% static "img/redirect_transfoplus.png" %}") center center no-repeat; overflow:hidden; border:1px solid rgb(220,220,220);'>
                 </div>
             </a>
             <div style='padding:10px; background-color:#FEC10D; border:1px solid rgb(230,230,230);'>

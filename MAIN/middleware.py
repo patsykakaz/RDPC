@@ -29,6 +29,7 @@ class NavMiddleware(object):
         # all_sites.extend(list(Site.objects.filter(pk=3)))
         all_sites = Site.objects.all()
         restrictedSite = Site.objects.get(name="LA LETTRE")
+        pages_univers = PageUnivers._base_manager.all()
         reportage = Reportage._base_manager.last()
         if reportage:
             reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
@@ -38,6 +39,7 @@ class NavMiddleware(object):
         last_sommaire = BlogPost._base_manager.filter(categories=sommaireCat)[0]
         # fetch color code
         for post in itertools.chain(free_blogPosts,restricted_blogPosts):
+            post.categories = BlogCategory._base_manager.filter(BlogPost=post)[:1]
             try:
                 post.extension_site = SiteExtension._base_manager.get(site=post.site)
             except:
@@ -66,6 +68,7 @@ class NavMiddleware(object):
 
         response.context_data['mainSite'] = settings.MAIN_SITE
         response.context_data['all_sites'] = all_sites
+        response.context_data['pages_univers'] = pages_univers
         response.context_data['free_blogPosts'] = free_blogPosts
         response.context_data['last_sommaire'] = last_sommaire
         response.context_data['restricted_blogPosts'] = restricted_blogPosts
