@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load pages_tags blog_tags mezzanine_tags keyword_tags i18n staticfiles custom_tags %}
 {% block meta_keywords %}
-    keywords
+    magazine, spécialiste, papier, innovation, actualités, carton  
 {% endblock %}
 {% block meta_description %}
-    meta_description
+    Le magazine Papier Carton vous informe sur toute l'actualité de l’industrie papetière.
 {% endblock %}
-{% block meta_title %}PAPIERCARTON{% endblock %}
+{% block meta_title %}Papier Carton, magazine spécialiste du papier{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/main.css" %}">
@@ -26,6 +26,7 @@
                         {{ reportage.title }}
                     </span>
                 </h4>
+                <a href='{{ reportage.get_absolute_url }}' >
                 <div id='slider-mask'>
                     <div id='slider-layer'>
                         <div id='slider'>
@@ -51,6 +52,7 @@
                         <btn class='fa fa-chevron-right'></btn>
                     </a>
                 </div>
+                </a>
             </div>
 
             <div id='free_articles'>
