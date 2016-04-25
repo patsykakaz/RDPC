@@ -39,7 +39,7 @@ class NavMiddleware(object):
         last_sommaire = BlogPost._base_manager.filter(categories=sommaireCat)[0]
         # fetch color code
         for post in itertools.chain(free_blogPosts,restricted_blogPosts):
-            post.categories = BlogCategory._base_manager.filter(BlogPost=post)[:1]
+            post.cat = BlogCategory._base_manager.filter(blogposts__in=[post,])
             try:
                 post.extension_site = SiteExtension._base_manager.get(site=post.site)
             except:

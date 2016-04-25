@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load pages_tags blog_tags mezzanine_tags keyword_tags i18n staticfiles custom_tags %}
+{% block meta_keywords %}
+    keywords
+{% endblock %}
+{% block meta_description %}
+    meta_description
+{% endblock %}
+{% block meta_title %}PAPIERCARTON{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/main.css" %}">
+{% endblock %}
+
+{% block main %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <div id='reportage'>
+                <h4>
+                    <strong style='color:#B60513;'>
+                        Le dossier de la semaine
+                    </strong>:
+                    <span style='font-size:16px; color:#333;'>
+                        <i class='fa fa-camera-retro' style='color:#333;'></i>
+                        {{ reportage.title }}
+                    </span>
+                </h4>
+                <div id='slider-mask'>
+                    <div id='slider-layer'>
+                        <div id='slider'>
+                            <!-- UNIVERS -->
+                            {% for element in reportage.inlines %}
+                            <div class='slider-item'>
+                                <img src='{{ MEDIA_URL }}{% thumbnail element.image 0 300 %}' alt="illustration carousel"/>
+                                {% if element.description %}
+                                <div class='slider-item-caption'>
+                                    <p>{{ element.description|truncatechars:150 }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <!-- UNIVERS -->
+                        </div>
+                    </div>
+                    <!-- Controls -->
+                    <a id='slider-control-left' class='slider-control' href="javascript:void(0);">
+                        <btn class='fa fa-chevron-left'></btn>
+                    </a>
+                    <a id='slider-control-right' class='slider-control' href="javascript:void(0);">
+                        <btn class='fa fa-chevron-right'></btn>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-10 col-md-offset-1'>
+            {% editable page.richtextpage.content %}
+            {{ page.richtextpage.content|richtext_filters|safe }}
+            {% endeditable %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -80,9 +80,9 @@
                     <div class='blogPost_caption {% if blogPost.featured_image %}half{% endif %}'>
                         <h3><i class='fa fa-chevron-right' style='color: {{ blogPost.extension_site.color }}'></i> {{ blogPost.title|capfirst }}</h3>
                         <div class='date'>{{ blogPost.created|date:"d.m.Y" }}</div>
-                        {% if blogPost.categories.first %}
+                        {% if blogPost.cat.first %}
                         <div class='categories'>
-                            {{ blogPost.categories.first }}
+                            {{ blogPost.cat.first }}
                         </div>
                         {% endif %}
                         <p>{% if blogPost.featured_image %}{{ blogPost.description_from_content|safe|striptags|truncatechars:125 }}{% else %}{{ blogPost.description_from_content|safe|striptags|truncatechars:175 }}{% endif %}</p>
@@ -102,7 +102,7 @@
                         </div>
                     {% elif forloop.counter == 5 and banners.1.title %}
                         <div class='row'>
-                        <div class='layer-banner layer-banner-mobile col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1'>
+                        <div class='col-md-12'>
                             <a href='{{ banners.1.lien }}' target='blank'>
                                 <div class='container-banner'>
                                     <img src='/static/media/publicite/{{ banners.1.media }}' />
@@ -112,7 +112,7 @@
                         </div>
                     {% elif forloop.counter == 8 and banners.2.title %}
                         <div class='row'>
-                        <div class='layer-banner layer-banner-mobile col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1'>
+                        <div class='col-md-12'>
                             <a href='{{ banners.2.lien }}' target='blank'>
                                 <div class='container-banner'>
                                     <img src='/static/media/publicite/{{ banners.2.media }}' />
@@ -142,9 +142,9 @@
                                 <img src='{{ MEDIA_URL }}{% thumbnail blogPost.featured_image 80 80 %}' alt='illustration article' />
                             {% endif %}
                             <div class='date'>{{ blogPost.created|date:"d.m.Y" }}</div>
-                            {% if blogPost.categories.first %}
+                            {% if blogPost.cat.first %}
                             <div class='categories'>
-                                {{ blogPost.categories.first }}
+                                {{ blogPost.cat.first }}
                             </div>
                             {% endif %}
                             <p>{{ blogPost.description_from_content|safe|striptags|truncatechars:90 }}</p>
