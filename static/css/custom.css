@@ -293,6 +293,7 @@ strong{
     height: 40px;
 }
 footer{
+    margin-top: 40px;
     padding: 40px 0 10px 0;
     background-color: rgb(250,250,250);
 }

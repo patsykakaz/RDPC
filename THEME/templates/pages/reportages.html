@@ -11,50 +11,15 @@
 {% endblock %}
 
 {% block main %}
-<script type="text/javascript">alert('ok');</script>
 <div class='container'>
     <div class='row'>
-        <div class='col-md-12'>
-            <h2 class='text-center' style='margin-bottom:20px;'>
-                <strong style='color:#B60513;'>
-                    Le dossier de la semaine
-                </strong>:
-                <span style='color:#333;'>
-                    <i class='fa fa-camera-retro' style='color:#333;'></i>
-                    {{ reportage.title }}
-                </span>
-            </h2>
-            <div id='reportage'>
-                <div id='slider-mask'>
-                    <div id='slider-layer'>
-                        <div id='slider'>
-                            <!-- UNIVERS -->
-                            {% for element in reportage.inlines %}
-                            <div class='slider-item'>
-                                <img src='{{ MEDIA_URL }}{% thumbnail element.image 0 300 %}' alt="illustration carousel"/>
-                                {% if element.description %}
-                                <div class='slider-item-caption'>
-                                    <p>{{ element.description|truncatechars:150 }}</p>
-                                </div>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                            <!-- UNIVERS -->
-                        </div>
-                    </div>
-                    <!-- Controls -->
-                    <a id='slider-control-left' class='slider-control' href="javascript:void(0);">
-                        <btn class='fa fa-chevron-left'></btn>
-                    </a>
-                    <a id='slider-control-right' class='slider-control' href="javascript:void(0);">
-                        <btn class='fa fa-chevron-right'></btn>
-                    </a>
-                </div>
+        <h2 class='text-center' style='margin-bottom:30px; color:#B60513;'>TOUS LES DOSSIERS DE LA SEMAINE</h2>
+        {% for element in reportages %}
+            <div class='col-md-6 col-sm-6 col-xs-12 text-center'>
+                <h4>{{ element.created|date:"d/m/Y" }} - {{ element.title }}</h4>
+                <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail element.illustration.image 0 300 %}' alt='illustration reportage de la semaine' />
             </div>
-        </div>
-        <div class='col-md-10 col-md-offset-1 col-sm-12 col-lg-10 col-lg-offset-1' style='margin-top:30px; margin-bottom:30px; '>
-            {{ reportage.content|richtext_filters|safe }}
-        </div>
+        {% endfor%}
     </div>
 </div>
 {% endblock %}

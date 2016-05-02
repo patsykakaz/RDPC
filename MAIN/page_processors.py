@@ -17,3 +17,10 @@ def processor_revue(request, page):
     except:
         PageUniv.illustration = False
     return locals()
+
+@processor_for('reportages')
+def processor_revue(request, page):
+    reportages = Reportage._base_manager.all()
+    for element in reportages:
+        element.illustration = Reportage_pic._base_manager.filter(Reportage=element).last()
+    return locals()
