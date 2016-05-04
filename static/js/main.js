@@ -226,7 +226,7 @@ $(document).ready(function(){
             sliderWidth = sliderWidth + $(this).outerWidth() + 20;
         });
         sliderWidth += 5;
-        $('#slider').css('width', sliderWidth+'px');
+        $('#slider').css('width', sliderWidth+5+'px');
     }
 
     // centrer le slider sur l'élément du milieu
