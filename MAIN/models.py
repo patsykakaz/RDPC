@@ -51,6 +51,8 @@ class Reportage(Page, RichText):
 
     def save(self, *args, **kwargs):
         self.in_menus = []
+        if not self.parent:
+            self.parent = Page.objects.get(title='SOMMAIRES')
         super(Reportage, self).save(*args, **kwargs)
 
     class Meta:

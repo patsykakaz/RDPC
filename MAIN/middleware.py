@@ -28,6 +28,7 @@ class NavMiddleware(object):
         # all_sites = list(Site.objects.exclude(pk=3).order_by('domain'))
         # all_sites.extend(list(Site.objects.filter(pk=3)))
         all_sites = Site.objects.all()
+        all_sites = all_sites.reverse()
         restrictedSite = Site.objects.get(name="LA LETTRE")
         pages_univers = PageUnivers._base_manager.all()
         reportage = Reportage._base_manager.last()

@@ -130,13 +130,17 @@ class AskAboForm(forms.Form):
     prenom = forms.CharField(label='Prénom', max_length=50, required=True)
     email = forms.EmailField(label="Adresse e-mail",required=True)
     societe= forms.CharField(label='Société', max_length=50, required=True)
+    adresse = forms.CharField(label='Adresse', max_length=50, required=False)
+    cp = forms.CharField(label='Code Postal', max_length=50, required=False)
+    ville = forms.CharField(label='Ville', max_length=50, required=False)
     phone = forms.CharField(label='Téléphone',required=False)
     REVUE_CHOICES = (
-        ('PNP', 'PNP'),
-        ('La Lettre PNP', 'La Lettre PNP'),
-        ('PNP + La Lettre PNP', 'PNP + La Lettre PNP'),
+        ('Offre simple (1 an - 4 numéros)', 'Offre simple (1 an - 4 numéros)'),
+        ('Offre DUO (1 an - 8 numéros)', 'Offre DUO (1 an - 8 numéros)'),
+        ('Offre TRIO (1 an - 12 numéros)', 'Offre TRIO (1 an - 12 numéros)'),
+        ('Offre La Lettre (1 an - 22 numéros)', 'Offre La Lettre (1 an - 22 numéros)'),
     )
-    revue = forms.ChoiceField(choices=REVUE_CHOICES)
+    revue = forms.ChoiceField(label='Offre',choices=REVUE_CHOICES)
 
     def clean(self):
         email = self.cleaned_data.get('email')

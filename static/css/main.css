@@ -100,8 +100,7 @@
 }
 @media screen and (max-width: 900px){
     .slider-item-caption{
-        bottom: 50px;
-        font-size: 27px;
+        font-size: 18px;
     }
     .slider-item{
         height: 241.875px;
@@ -112,11 +111,11 @@
 }
 @media screen and (max-width: 485px){
     .slider-item-caption{
-        bottom: 40px;
-        font-size: 19px;
+        font-size: 13px;
     }
     .slider-item{
         height: 180px;
+        vertical-align: middle;
     }
     .slider-item img{
         width: 320px;

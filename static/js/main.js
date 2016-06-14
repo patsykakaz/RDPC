@@ -35,6 +35,12 @@ $(window).resize(function(){
     }else{
         $('#banner_layer').height(150);
     }
+    if($('#slider').length){
+        adapt_slider_width();
+        slider_items_midPosition_array = create_slider_array();
+        center_slider_animated();
+        placement_slider_control();
+    }
     AbonnementBtn(false);
 });
 
