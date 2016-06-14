@@ -13,6 +13,14 @@ $(document).ready(function(){
         $(window).scroll(function(){
             deployAds();
         });
+        // vertical centering for .slider-item>.img with smaller height
+        $('.slider-item').each(function(){
+            console.log($(this).height());
+            console.log($(this).children('img').height());
+            if($(this).children('img').height() < $(this).height()-5){
+                $(this).children('img').css('margin-top',($(this).height()-$(this).children('img').height())/2);
+            }
+        });
     });
     $('.caption-screen').first().addClass('first');
     if($('#slider').length){
@@ -199,6 +207,7 @@ $(document).ready(function(){
     $('#slider-mask').children().mouseout(function(){
         $('.slider-control').removeClass('slider-control-on');
     });
+
 });
 // Custom Slider
 

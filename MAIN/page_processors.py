@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -18,9 +19,20 @@ def processor_revue(request, page):
         PageUniv.illustration = False
     return locals()
 
+
+@processor_for(Reportage)
+def processor_reportage(request,page):
+    try:
+        reportage_last = Reportage._base_manager.get(id=page.id)
+        reportage_last.inlines = Reportage_pic._base_manager.filter(Reportage=reportage_last)
+    except:
+        reportage_last = Reportage._base_manager.last()
+    return locals()
+
 @processor_for('reportages')
-def processor_revue(request, page):
+def processor_reportages(request, page):
     reportages = Reportage._base_manager.all()
     for element in reportages:
         element.illustration = Reportage_pic._base_manager.filter(Reportage=element).last()
     return locals()
+

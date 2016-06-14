@@ -15,13 +15,16 @@
     <div class='row'>
         <h2 class='text-center' style='margin-bottom:30px; color:#B60513;'>TOUS LES DOSSIERS DE LA SEMAINE</h2>
         {% for element in reportages %}
+            <a href='{{ element.get_absolute_url }}'>
             <div class='col-md-6 col-sm-6 col-xs-12 text-center'>
                 <h4>{{ element.created|date:"d/m/Y" }} - {{ element.title }}</h4>
                 <img class='img-thumbnail' src='{{ MEDIA_URL }}{% thumbnail element.illustration.image 0 300 %}' alt='illustration reportage de la semaine' />
             </div>
+            </a>
         {% endfor%}
     </div>
 </div>
 {% endblock %}
+
 
 

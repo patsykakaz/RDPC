@@ -20,7 +20,7 @@
                 </strong>:
                 <span style='color:#333;'>
                     <i class='fa fa-camera-retro' style='color:#333;'></i>
-                    {{ reportage.title }}
+                    {{ reportage_last.title }}
                 </span>
             </h2>
             <div id='reportage'>
@@ -28,7 +28,7 @@
                     <div id='slider-layer'>
                         <div id='slider'>
                             <!-- UNIVERS -->
-                            {% for element in reportage.inlines %}
+                            {% for element in reportage_last.inlines %}
                             <div class='slider-item'>
                                 <img src='{{ MEDIA_URL }}{% thumbnail element.image 0 300 %}' alt="illustration carousel"/>
                                 {% if element.description %}
@@ -52,10 +52,11 @@
             </div>
         </div>
         <div class='col-md-10 col-md-offset-1 col-sm-12 col-lg-10 col-lg-offset-1' style='margin-top:30px; margin-bottom:30px; '>
-            {{ reportage.content|richtext_filters|safe }}
+            {{ reportage_last.content|richtext_filters|safe }}
         </div>
     </div>
 </div>
 {% endblock %}
+
 
 
