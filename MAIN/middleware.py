@@ -34,9 +34,9 @@ class NavMiddleware(object):
         reportage = Reportage._base_manager.last()
         if reportage:
             reportage.inlines = Reportage_pic._base_manager.filter(Reportage=reportage)
-        restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)
+        restricted_blogPosts = BlogPost._base_manager.filter(site=restrictedSite).exclude(status=1)[:12]
         sommaireCat = BlogCategory._base_manager.get(title='Sommaire')
-        free_blogPosts = list(BlogPost._base_manager.exclude(site=restrictedSite).exclude(categories=sommaireCat))
+        free_blogPosts = list(BlogPost._base_manager.exclude(site=restrictedSite).exclude(categories=sommaireCat))[:12]
         last_sommaire = BlogPost._base_manager.filter(categories=sommaireCat)[0]
         # fetch color code
         for post in itertools.chain(free_blogPosts,restricted_blogPosts):
@@ -75,6 +75,7 @@ class NavMiddleware(object):
         response.context_data['restricted_blogPosts'] = restricted_blogPosts
         response.context_data['reportage'] = reportage
         return response
+
 
 
 
